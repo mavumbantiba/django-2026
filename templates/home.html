@@ -134,11 +134,10 @@
    
    
 
-    <script>
-        
-        let time=document.getElementById('time');
-        let clock=new Date().toLocaleTimeString();
+   <script>
             function updateTime(){
+                let time=document.getElementById('time');
+                let clock=new Date().getHours();
                 const now=new Date().toLocaleTimeString();
                  if (clock<12){
                     time.innerHTML= now +' '+' Good Morning ' + "{{user}}";
@@ -158,6 +157,7 @@
     });
       
     </script>
+
 
 
 
