@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Students</title>
     <style>
+        @media(max-width:600px){
+            body{
+                width:100%
+            }
+        }
         h1{
             font-size: clamp(1.5rem, 4vw, 2.5rem);
         }
@@ -63,49 +68,11 @@
     </style>
 </head>
 <body>
-    <table border="1">
-        <thead>
-
-           <th>NAME</th>
-           <th>MATH</th>
-           <th>PHYS</th>
-           <th>CS</th>
-           <th>BIOS</th>
-           <th>GEO</th>
-           <th>CHEM</th>
-           <th>IT</th>
-           <th>HIST</th>
-           <th>CIV</th>
-           <th>KISW</th>
-            <th>ENG</th>
-
-        </thead>
-
-        <tbody>
-            <td>DEOGRATIUS JAMES</td>
-            <td>33</td>
-            <td>78</td>
-            <td>78</td>
-            <td>56</td>
-            <td>45</td>
-            <td>90</td>
-            <td>78</td>
-            <td>45</td>
-            <td>76</td>
-            <td>90</td>
-            <td>78</td>
-        </tbody>
-    </table>
-     
+    
 
 
-    {% if messages %}
-    {%for message in messages %}
-    <p class="{{message.tags}}">{{message}}</p>
-    {% endfor %}
-    <hr>
-    {% endif %}
-    <!--{% for message in messages %}
+  
+    {% for message in messages %}
     <script>
         Swal.fire({
             icon:'info',
@@ -122,9 +89,9 @@
     </script>
     {% endfor %} 
      
-     <br>-->
+     <br>
     
-<p id="time"></p>
+<h1 id="time">Live clock is running here......</h1>
      <form method="get">
         <input type="text" name="q" placeholder="Type /hover mouse here to search....." id='search' list="names" autocomplete="off" style="width: 40%; font-size: large; font-weight: bolder;"> <button id="seach-btn" >SEARCH</button>
         <datalist id='names'>
@@ -169,17 +136,20 @@
 
     <script>
         
-        let p=document.getElementById('time');
-        const time=new Date()
-        let hrs=time.getHours()
-        if (hrs<12){
-            p.innerText=' Good Morning ' + "{{user}}";
-        } else if (hrs<16){
-            p.innerText='Good Afternoon ' + "{{user}}";
-        } else if (hrs>=16){
-            p.innerText='Good Evening ' +"{{user}}";
-        };
+        let time=document.getElementById('time');
+        let clock=new Date()
+            function updateTime(){
+                const now=new Date().toLocaleTimeString();
+                 if (clock<12){
+                    time.innerHTML= now +' '+' Good Morning ' + "{{user}}";
+                } else if (clock<16){
+                    time.innerHTML=now+' '+'Good Afternoon ' + "{{user}}";
+                } else if (clock<20){
+                    time.innerHTML= now+' '+'Good Evening ' +"{{user}}";
+                };
 
+            }
+            setInterval(updateTime,1000);
 
         let selectAll=document.getElementById('select-all');
         selectAll.addEventListener('change',()=>{
