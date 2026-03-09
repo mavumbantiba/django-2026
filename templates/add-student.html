@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new student records</title>
+    <style>
+        .error{
+            color: red;
+        }
+        .info{
+            color:magenta;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    {%for message in messages %}
+    <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+    <hr>
+    {% endif %}
+    <br><br>
+    <form method="post">
+        {% csrf_token %}
+        <label for="form">Full Name: </label>
+        <input type="text" name="name" class="name" id="name"> <p id="status"></p>
+        <br><br>
+        <button id="submit">SUBMIT</button>
+    </form>
+    <script>
+        let input=document.getElementById('name');
+        let p=document.getElementById('status');
+        let btn=document.getElementById('submit-btn');
+        btn.addEventListener('click',()=>{
+            if (input.value.length<8){
+                p.innerText='Please enter the valid name';
+                input.style.borderColor='red';
+            };
+        });
+
+        input.addEventListener('input',()=>{
+            if (input.value.length<8){
+                btn.disabled=true;
+
+            } else {
+                btn.disabled=false;
+            };
+        });
+    </script>
+</body>
+</html>

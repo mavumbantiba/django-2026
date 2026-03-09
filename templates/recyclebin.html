@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trashed</title>
+</head>
+<style>
+    body{
+        background:repeating-radial-gradient(circle,black,black);
+        color:white
+    }
+    .pop{
+        border: none;
+    }
+    .btn-icon{
+        font-size: 1.5em;
+    }
+</style>
+<body>
+    {% if messags %}
+    {%for message in messages %}
+    <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+    <hr>
+    {% endif %}
+    
+    {% for message in messages %}
+    <script>
+        Swal.fire({
+            icon:'info',
+            text:'{{message}}',
+            timer:3000,
+            timerProgressBar:true,
+            showConfirmButton:false,
+        })
+    </script>
+    {% endfor %} 
+
+
+   <!--  {% for student in deleted %}
+    <h1>{{student.name}} </h1>
+    
+    <a href="delete-permanent/{{student.id}}" id="delete">Delete Permanent</a>
+    <a href="restore/{{student.id}}">Restore</a>
+    {% empty %}
+    <h1 style="margin: 50px; color: blueviolet;" >The data you delete will appear here</h1>
+    {% endfor %} <br><br>
+   <hr>
+   <p>{{total}} items found in trash</p>
+    <a href="/">BACK</a>
+    <script>
+        const btn=document.getElementById('delete');
+        btn.addEventListener('click',(e)=>{
+            e.preventDefault();
+           Swal.fire({
+            icon:'info',
+            title:'Deleting........',
+            confirmButtonText:'DELETE',
+            confirmButtonColor:'red',
+            showCancelButton:true,
+            cancelButtonText:'CANCEL',
+            cancelButtonColor:'green',
+            preConfirm:()=>{
+                 Swal.fire({
+                icon:'question',
+                title:'Confirmation',
+                text:'Are you sure you want to delete permanently? This action can not be undone',
+                showCancelButton:true,
+                cancelButtonText:'NO',
+                cancelButtonColor:'green',
+                confirmButtonText:'YES',
+                confirmButtonColor:'red',
+                
+            });
+            },
+           }).then((result)=>{
+            if (result.isConfirmed){
+                Swal.fire({
+                    icon:'success',
+                    title:'Success.....',
+                    showConfirmButton:false,
+                    title:'An item has been permanently deleted ',
+                    timer:2000,
+                    timerProgressBar:true,
+                });
+            } else {
+                Swal.fire({
+                    icon:'infor',
+                    title:'Action ancelled.....',
+                    showConfirmButton:false,
+                    timer:2000,
+                    timerProgressBar:true,
+                });
+            };
+           });
+           
+        });
+    </script> -->
+    {% if deleted %}
+    <input type="checkbox" name="selectall" id="select-all"> 
+    <span>Select all items</span>  <button popovertarget="buttons" type="button" title="MORE ACTIONS" class="btn-icon">&equiv;</button><br>
+     <hr><br><br><br>
+      <h1 style="color: green;">LIST OF STUDENT YOU DELETED</h1>
+    <form  method="post" action="actions">
+        {% for student in deleted %}
+       
+        <input type="checkbox" name="selected-items" id="selected" value="{{student.id}}" > 
+        <span>{{student.name}}</span>
+        <br><br>
+         {% endfor %}
+         {% csrf_token %}
+        <div id="buttons" popover class="pop">
+             <button type="submit" name="action" value="delete">Delete permanent</button> <br> <hr>
+             <button type="submit" name="action" value="restore">Restore</button>
+        </div>
+    </form>
+    {% else %}
+    <h1>Trashed data will appear here.....</h1>
+    {% endif %}
+   <script>
+    let selectAll=document.getElementById('select-all');
+    selectAll.addEventListener('change',()=>{
+        const checkboxes=document.querySelectorAll('#selected');
+        checkboxes.forEach(ch=>ch.checked=selectAll.checked);
+    });
+   </script>
+
+<button onclick="window.location.href='/';">BACK</button>
+</body>
+</html>

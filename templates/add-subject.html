@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding subject</title>
+</head>
+<body>
+    {% if messages %}
+    {%for message in messages %}
+    <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+    <hr>
+    {% endif %}
+
+        <br>
+
+    <input type="checkbox" id="select-all"> <span>Select all subject</span>
+    <form method="post">
+        {% csrf_token %}
+        <input type="checkbox" name="name" class="name" value="Mathematics"> <span>Mathematics</span> <br>
+        <input type="checkbox" name="name" class="name" value="Physics"> <span>Physics</span><br>
+        <input type="checkbox" name="name" class="name" value="Biology"> <span>Biology</span><br>
+        <input type="checkbox" name="name" class="name" value="Computer Science"> <span>Computer Science</span><br>
+        <input type="checkbox" name="name" class="name" value="IT"> <span>IT</span><br>
+        <input type="checkbox" name="name" class="name" value="Chemistry"> <span>Chemistry</span><br><br>
+        <button id="save-btn">Save</button>
+    </form>
+
+    <script>
+        let selectAll=document.getElementById('select-all');
+        selectAll.addEventListener('change',()=>{
+            const checkboxes=document.querySelectorAll('.name');
+            checkboxes.forEach((ch)=>ch.checked=selectAll.checked);
+        });
+    </script>
+</body>
+</html>

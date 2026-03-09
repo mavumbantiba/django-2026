@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <style>
+        h1{
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+        .error{
+            color: red;
+        }
+        .success{
+            color:rgb(7, 193, 250);
+        }
+        .mybar{
+            background-color: red;
+            height:15px;
+        }
+        body{
+            color:white;
+            font-size: clamp(14px,2.5vw,18px);
+            font-weight: bolder;
+            background:radial-gradient(circle,rgba(200,100,150,0.5),rgba(0,0,100))
+        }
+        #dataForm{
+            margin:100px;
+            padding:100px;
+            width: 50%;
+            background:linear-gradient(to bottom,green,white);
+            border-left: 10px solid rgb(248, 5, 208);
+            
+            border-radius: 8px;
+        }
+        input[type='checkbox']{
+            width: 20px;
+        }
+        .student-info{
+            border: none;
+            background:linear-gradient(to bottom,green,white);
+            outline: none;
+             padding: 20px;
+            width:80%;
+            cursor: pointer;
+            padding-left: 20px;
+            
+        }
+        .student-info:hover{
+            font-size: large;
+            font-weight:bolder;
+            text-decoration: underline;
+            width: 90%;
+            transition: width 2s linear;
+            background:linear-gradient(to top,green,white);
+           
+
+        }
+        table{
+            table-layout: auto;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <thead>
+
+           <th>NAME</th>
+           <th>MATH</th>
+           <th>PHYS</th>
+           <th>CS</th>
+           <th>BIOS</th>
+           <th>GEO</th>
+           <th>CHEM</th>
+           <th>IT</th>
+           <th>HIST</th>
+           <th>CIV</th>
+           <th>KISW</th>
+            <th>ENG</th>
+
+        </thead>
+
+        <tbody>
+            <td>DEOGRATIUS JAMES</td>
+            <td>33</td>
+            <td>78</td>
+            <td>78</td>
+            <td>56</td>
+            <td>45</td>
+            <td>90</td>
+            <td>78</td>
+            <td>45</td>
+            <td>76</td>
+            <td>90</td>
+            <td>78</td>
+        </tbody>
+    </table>
+     
+
+
+    {% if messages %}
+    {%for message in messages %}
+    <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+    <hr>
+    {% endif %}
+    <!--{% for message in messages %}
+    <script>
+        Swal.fire({
+            icon:'info',
+            backdrop:'red',
+            theme:'dark',
+            title:'{{message}}',
+            timer:3000,
+            timerProgressBar:true,
+            showConfirmButton:false,
+            customClass: {
+                timer:'mybar'
+            }
+        })
+    </script>
+    {% endfor %} 
+     
+     <br>-->
+    
+<p id="time"></p>
+     <form method="get">
+        <input type="text" name="q" placeholder="Type /hover mouse here to search....." id='search' list="names" autocomplete="off" style="width: 40%; font-size: large; font-weight: bolder;"> <button id="seach-btn" >SEARCH</button>
+        <datalist id='names'>
+            {% for student in students %}
+            <option value="{{student.name}}">
+            {% endfor %}
+        </datalist>
+     </form>
+     <p id="error" style="color: red;"></p>
+     <button onclick="window.location.href='recyclebin';">TRASH</button>
+     <button onclick="window.location.href='add-student';">ADD NEW STUDENT</button>
+     <button onclick="window.location.href='add-subject';">ADD SUBJECT</button>
+      
+   {% if students %}
+    <input type="checkbox"  id="select-all"> <span class="select-all">Select all students</span>
+   {% endif %}
+
+   <form method="post"  id="dataForm">
+    <h1 style="color: blue; text-align: center;">REGISTERED STUDENTS FORM 1 <br> YEAR: 2026</h1>
+    {% for student in students %}
+        
+            <div class="check">
+                    <input type="checkbox" name="selected-items" id="selected" value="{{student.id}}"> 
+                    <span class="student"><button onclick=window.location.href="student/{{student.id}}" type="button" class="student-info">{{student.name}}</button>
+                    </span>
+
+                       
+            </div>
+             {% empty %}
+                <h1>No student records found</h1>
+    {% endfor %} <br><br>
+             <p style="color: blue; font-size: 1.5em;"> {{found}} student(s) found</p> <br>
+    {% csrf_token %}
+   {% if students%}
+    <button type="submit" id="trash">Move to Trash</button>
+   {% endif %}
+  
+   </form>
+   
+   
+   
+
+    <script>
+        
+        let p=document.getElementById('time');
+        const time=new Date()
+        let hrs=time.getHours()
+        if (hrs<12){
+            p.innerText=' Good Morning ' + "{{user}}";
+        } else if (hrs<16){
+            p.innerText='Good Afternoon ' + "{{user}}";
+        } else if (hrs>=16){
+            p.innerText='Good Evening ' +"{{user}}";
+        };
+
+
+        let selectAll=document.getElementById('select-all');
+        selectAll.addEventListener('change',()=>{
+        const checkboxes =document.querySelectorAll('#selected');
+       checkboxes.forEach(check=>check.checked=selectAll.checked);
+    });
+      
+    </script>
+
+
+
+</body>
+</html>
