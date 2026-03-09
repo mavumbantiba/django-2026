@@ -137,7 +137,7 @@
     <script>
         
         let time=document.getElementById('time');
-        let clock=new Date()
+        let clock=new Date().toLocaleTimeString();
             function updateTime(){
                 const now=new Date().toLocaleTimeString();
                  if (clock<12){
