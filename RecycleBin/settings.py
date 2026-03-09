@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'Bin',
     'django_softdelete',
 ]
-
+LOGIN=_URL="login/" 
+LOGIN_REDIRECT="/" 
+LOGOUT_REDIRECT="/" 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
