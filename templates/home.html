@@ -140,11 +140,11 @@
                 let clock=new Date().getHours();
                 const now=new Date().toLocaleTimeString();
                  if (clock<12){
-                    time.innerHTML= now +' '+' Good Morning ' + "{{user}}";
+                    time.innerHTML= now +' '+' Good Morning ';
                 } else if (clock<16){
-                    time.innerHTML=now+' '+'Good Afternoon ' + "{{user}}";
+                    time.innerHTML=now+' '+'Good Afternoon ';
                 } else if (clock<20){
-                    time.innerHTML= now+' '+'Good Evening ' +"{{user}}";
+                    time.innerHTML= now+' '+'Good Evening ';
                 };
 
             }
